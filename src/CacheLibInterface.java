@@ -1,8 +1,10 @@
+import java.util.Optional;
+
 public interface CacheLibInterface {
      void put(String key, String value);
-     String get(String key);
+     Optional<String> get(String key);
      void delete(String key);
      void clear();
-     void getStatistics();
+     CacheStatistics getStatistics();
      void printContent();
 }
