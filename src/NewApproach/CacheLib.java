@@ -5,7 +5,6 @@ import java.util.Optional;
 
 /*
 Follows LRU principle
-This Cache library follows LRU principle
  */
 public class CacheLib implements CacheLibInterface {
 
