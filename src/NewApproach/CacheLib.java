@@ -65,11 +65,12 @@ public class CacheLib implements CacheLibInterface {
     @Override
     public CacheStatistics getStatistics() { //O(1)
         int currentCacheSize;
+        int removeListQueueSize;
         synchronized (this) {
             currentCacheSize =  storageMap.size(); //O(1)
-            //removeListQueue = removeListQueue.size();
+            removeListQueueSize = removeListQueue.getSize();
         }
-        return new CacheStatistics(this.CACHE_MAX_SIZE, currentCacheSize, 0);
+        return new CacheStatistics(this.CACHE_MAX_SIZE, currentCacheSize, removeListQueueSize);
     }
 
     @Override

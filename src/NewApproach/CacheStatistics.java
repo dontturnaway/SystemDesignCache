@@ -15,6 +15,7 @@ public class CacheStatistics {
     public void printStatistics() {
         System.out.println("CACHE_MAX_SIZE: " + cacheMaxSize);
         System.out.println("CACHE_CURRENT_SIZE: " + cacheCurrentSize);
+        System.out.println("CACHE_LRU_QUEUE_SIZE: " + LruQueueSize);
     }
 
 }
