@@ -9,8 +9,9 @@ public class RemoveList {
         if (this.initListWithFirstNode(node)) {
             return;
         }
-        node.setNextNode(firstNode);
-        this.firstNode.setPrevNode(node);
+        var exFirstNode = firstNode;
+        node.setNextNode(exFirstNode);
+        exFirstNode.setPrevNode(node);
         this.firstNode=node;
         size++;
     }
@@ -19,9 +20,9 @@ public class RemoveList {
         if (this.initListWithFirstNode(node)) {
             return;
         }
-        var lastNodeOld = lastNode;
-        node.setPrevNode(lastNodeOld);
-        lastNodeOld.setNextNode(node);
+        var exLastNode = lastNode;
+        node.setPrevNode(exLastNode);
+        exLastNode.setNextNode(node);
         this.lastNode=node;
         size++;
     }
