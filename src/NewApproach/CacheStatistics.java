@@ -12,10 +12,10 @@ public class CacheStatistics {
         this.LruQueueSize = LruQueueSize;
     }
 
-    public void printStatistics() {
-        System.out.println("CACHE_MAX_SIZE: " + cacheMaxSize);
-        System.out.println("CACHE_CURRENT_SIZE: " + cacheCurrentSize);
-        System.out.println("CACHE_LRU_QUEUE_SIZE: " + LruQueueSize);
+    public String toString() {
+        return "CACHE_MAX_SIZE: " + cacheMaxSize.toString() +
+                "; CACHE_CURRENT_SIZE: " + cacheCurrentSize.toString() +
+                "; CACHE_LRU_QUEUE_SIZE: " + LruQueueSize.toString();
     }
 
 }

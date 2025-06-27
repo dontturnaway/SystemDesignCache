@@ -13,17 +13,17 @@ public class Main {
             cache.put(Integer.toString(i), "Item No " + i);
         }
         System.out.println("Added " + itemsToAdd + " elements to the cache");
-        cache.getStatistics().printStatistics();
+        System.out.println(cache.getStatistics());
         cache.printContent();
 
         System.out.println("Get K=5 from the cache");
-        cache.getStatistics().printStatistics();
+        System.out.println(cache.getStatistics());
         cache.get("5");
         cache.printContent();
 
         System.out.println("Delete K=6 from the cache");
         cache.delete("6");
-        cache.getStatistics().printStatistics();
+        System.out.println(cache.getStatistics());
         cache.printContent();
     }
 }
