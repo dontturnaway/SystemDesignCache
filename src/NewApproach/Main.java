@@ -4,14 +4,15 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println("New Approach");
-        System.out.println("");
+        System.out.println();
 
         CacheLib cache = new CacheLib(10);
 
-        for (int i = 1; i <= 10; i++) {
+        int itemsToAdd=10;
+        for (int i = 1; i <= itemsToAdd; i++) {
             cache.put(Integer.toString(i), "Item No " + i);
         }
-        System.out.println("Added 14 elements to the cache");
+        System.out.println("Added " + itemsToAdd + " elements to the cache");
         cache.getStatistics().printStatistics();
         cache.printContent();
 

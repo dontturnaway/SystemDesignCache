@@ -29,7 +29,7 @@ public class CacheLib implements CacheLibInterface {
                     storageMap.remove(itemToRemove.getKey());
                 }
             }
-            removeListQueue.addToEnd(node);
+            removeListQueue.appendToEnd(node);
             storageMap.put(key, node);
         }
     }
@@ -39,7 +39,7 @@ public class CacheLib implements CacheLibInterface {
         synchronized (this) {
             var node = storageMap.get(key);
             removeListQueue.delete(node);
-            removeListQueue.addToEnd(node);
+            removeListQueue.appendToEnd(node);
             return Optional.of(node.getValue());
         }
     }

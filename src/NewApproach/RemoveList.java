@@ -5,7 +5,7 @@ public class RemoveList {
     private RemoveListNode lastNode;
     private int size;
 
-    public void addToBegin(RemoveListNode node) {
+    public void appendToBegin(RemoveListNode node) {
         if (this.initListWithFirstNode(node)) {
             return;
         }
@@ -15,7 +15,7 @@ public class RemoveList {
         size++;
     }
 
-    public void addToEnd(RemoveListNode node) {
+    public void appendToEnd(RemoveListNode node) {
         if (this.initListWithFirstNode(node)) {
             return;
         }
