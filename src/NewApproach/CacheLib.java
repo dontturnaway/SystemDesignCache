@@ -23,24 +23,24 @@ public class CacheLib implements CacheLibInterface {
         synchronized (this) {
             if (storageMap.containsKey(key)) {
                 var nodeToRemove = storageMap.get(key);
-                removeListQueue.delete(nodeToRemove); //O(n), search for 1-st occurence
+                removeListQueue.delete(nodeToRemove);
             } else {
-                if (storageMap.size() >= CACHE_MAX_SIZE) { //O(1) - HashMap stores it
-                    var itemToRemove = removeListQueue.popBegin(); //O(1) - remove first from the queue
-                    storageMap.remove(itemToRemove.getKey()); //O(1)
+                if (storageMap.size() >= CACHE_MAX_SIZE) {
+                    var itemToRemove = removeListQueue.popBegin();
+                    storageMap.remove(itemToRemove.getKey());
                 }
             }
-            removeListQueue.addToEnd(node); //O(1)
-            storageMap.put(key, node); //O(1)
+            removeListQueue.addToEnd(node);
+            storageMap.put(key, node);
         }
     }
 
     @Override
-    public Optional<String> get(String key) { //O(n)
+    public Optional<String> get(String key) {
         synchronized (this) {
             var node = storageMap.get(key);
-            removeListQueue.delete(node); //O(n)
-            removeListQueue.addToEnd(node); //O(n), add to the tail of the queue
+            removeListQueue.delete(node);
+            removeListQueue.addToEnd(node);
             return Optional.of(node.getValue());
         }
     }
@@ -49,13 +49,13 @@ public class CacheLib implements CacheLibInterface {
     public void delete(String key) {
         synchronized (this) {
             var node = storageMap.get(key);
-            removeListQueue.delete(node); //O(n), remove from the queue
-            storageMap.remove(key); //O(1)
+            removeListQueue.delete(node);
+            storageMap.remove(key);
         }
     }
 
     @Override
-    public void clear() { //O(1)
+    public void clear() {
         synchronized (this) {
             removeListQueue.truncate();
             storageMap.clear();
@@ -63,18 +63,18 @@ public class CacheLib implements CacheLibInterface {
     }
 
     @Override
-    public CacheStatistics getStatistics() { //O(1)
+    public CacheStatistics getStatistics() {
         int currentCacheSize;
         int removeListQueueSize;
         synchronized (this) {
-            currentCacheSize =  storageMap.size(); //O(1)
+            currentCacheSize =  storageMap.size();
             removeListQueueSize = removeListQueue.getSize();
         }
         return new CacheStatistics(this.CACHE_MAX_SIZE, currentCacheSize, removeListQueueSize);
     }
 
     @Override
-    public void printContent() { //O(n)
+    public void printContent() {
         System.out.println(" ");
         System.out.println("===Cache content===");
         synchronized (this) {
