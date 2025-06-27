@@ -1,20 +1,16 @@
+package NewApproach;
+
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Optional;
 
 /*
 Follows LRU principle
 This Cache library follows LRU principle
  */
-
-//Optional
-//DELETE FOR DUPLICATED KEY
-//Send links O(n) -> O(1)
-
 public class CacheLib implements CacheLibInterface {
 
-    private final HashMap<String, String> storageMap = new HashMap<>();
-    private final LinkedList<String> deleteQueue = new LinkedList<>();
+    private final HashMap<String, RemoveListNode> storageMap = new HashMap<>();
+    private final RemoveList removeListQueue = new RemoveList();
     private final int CACHE_MAX_SIZE;
 
     public CacheLib(Integer cacheSize) {
@@ -23,33 +19,37 @@ public class CacheLib implements CacheLibInterface {
 
     @Override
     public void put(String key, String value) { //O(1)
+        RemoveListNode node = new RemoveListNode(key, value);
         synchronized (this) {
             if (storageMap.containsKey(key)) {
-                deleteQueue.remove(key); //O(n), search for 1-st occurence
+                var nodeToRemove = storageMap.get(key);
+                removeListQueue.deleteNode(nodeToRemove); //O(n), search for 1-st occurence
             } else {
                 if (storageMap.size() >= CACHE_MAX_SIZE) { //O(1) - HashMap stores it
-                    String itemToRemove = deleteQueue.remove(); //O(1) - remove first from the queue
-                    storageMap.remove(itemToRemove); //O(1)
+                    var itemToRemove = removeListQueue.popBegin(); //O(1) - remove first from the queue
+                    storageMap.remove(itemToRemove.getKey()); //O(1)
                 }
             }
-            deleteQueue.addLast(key); //O(1)
-            storageMap.put(key, value); //O(1)
+            removeListQueue.addNodeEnd(node); //O(1)
+            storageMap.put(key, node); //O(1)
         }
     }
 
     @Override
     public Optional<String> get(String key) { //O(n)
         synchronized (this) {
-            deleteQueue.remove(key); //O(n)
-            deleteQueue.offer(key); //O(n), add to the tail of the queue
-            return Optional.of(storageMap.get(key));
+            var node = storageMap.get(key);
+            removeListQueue.deleteNode(node); //O(n)
+            removeListQueue.addNodeEnd(node); //O(n), add to the tail of the queue
+            return Optional.of(node.getValue());
         }
     }
 
     @Override
     public void delete(String key) {
         synchronized (this) {
-            deleteQueue.remove(key); //O(n), remove from the queue
+            var node = storageMap.get(key);
+            removeListQueue.deleteNode(node); //O(n), remove from the queue
             storageMap.remove(key); //O(1)
         }
     }
@@ -57,7 +57,7 @@ public class CacheLib implements CacheLibInterface {
     @Override
     public void clear() { //O(1)
         synchronized (this) {
-            deleteQueue.clear();
+            removeListQueue.clear();
             storageMap.clear();
             }
     }
@@ -67,8 +67,9 @@ public class CacheLib implements CacheLibInterface {
         int currentCacheSize;
         synchronized (this) {
             currentCacheSize =  storageMap.size(); //O(1)
+            //removeListQueue = removeListQueue.size();
         }
-        return new CacheStatistics(this.CACHE_MAX_SIZE, currentCacheSize);
+        return new CacheStatistics(this.CACHE_MAX_SIZE, currentCacheSize, 0);
     }
 
     @Override
@@ -77,7 +78,7 @@ public class CacheLib implements CacheLibInterface {
         System.out.println("===Cache content===");
         synchronized (this) {
             System.out.println("Memory content: " + storageMap);
-            System.out.println("LRU content: " + deleteQueue);
+            System.out.println("LRU content: " + removeListQueue);
         }
         System.out.println("===/Cache content===");
         System.out.println(" ");

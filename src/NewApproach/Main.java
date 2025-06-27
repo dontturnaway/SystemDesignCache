@@ -1,8 +1,14 @@
+package NewApproach;
+
 public class Main {
     public static void main(String[] args) {
+
+        System.out.println("New Approach");
+        System.out.println("");
+
         CacheLib cache = new CacheLib(10);
 
-        for (int i = 1; i <= 12; i++) {
+        for (int i = 1; i <= 10; i++) {
             cache.put(Integer.toString(i), "Item No " + i);
         }
         System.out.println("Added 14 elements to the cache");

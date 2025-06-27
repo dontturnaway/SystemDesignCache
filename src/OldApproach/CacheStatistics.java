@@ -1,3 +1,5 @@
+package OldApproach;
+
 public class CacheStatistics {
 
     final Integer cacheMaxSize;

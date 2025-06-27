@@ -1,3 +1,5 @@
+import OldApproach.CacheLib;
+import OldApproach.CacheStatistics;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
