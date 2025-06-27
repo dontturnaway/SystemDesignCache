@@ -23,14 +23,14 @@ public class CacheLib implements CacheLibInterface {
         synchronized (this) {
             if (storageMap.containsKey(key)) {
                 var nodeToRemove = storageMap.get(key);
-                removeListQueue.deleteNode(nodeToRemove); //O(n), search for 1-st occurence
+                removeListQueue.delete(nodeToRemove); //O(n), search for 1-st occurence
             } else {
                 if (storageMap.size() >= CACHE_MAX_SIZE) { //O(1) - HashMap stores it
                     var itemToRemove = removeListQueue.popBegin(); //O(1) - remove first from the queue
                     storageMap.remove(itemToRemove.getKey()); //O(1)
                 }
             }
-            removeListQueue.addNodeEnd(node); //O(1)
+            removeListQueue.addToEnd(node); //O(1)
             storageMap.put(key, node); //O(1)
         }
     }
@@ -39,8 +39,8 @@ public class CacheLib implements CacheLibInterface {
     public Optional<String> get(String key) { //O(n)
         synchronized (this) {
             var node = storageMap.get(key);
-            removeListQueue.deleteNode(node); //O(n)
-            removeListQueue.addNodeEnd(node); //O(n), add to the tail of the queue
+            removeListQueue.delete(node); //O(n)
+            removeListQueue.addToEnd(node); //O(n), add to the tail of the queue
             return Optional.of(node.getValue());
         }
     }
@@ -49,7 +49,7 @@ public class CacheLib implements CacheLibInterface {
     public void delete(String key) {
         synchronized (this) {
             var node = storageMap.get(key);
-            removeListQueue.deleteNode(node); //O(n), remove from the queue
+            removeListQueue.delete(node); //O(n), remove from the queue
             storageMap.remove(key); //O(1)
         }
     }
@@ -57,7 +57,7 @@ public class CacheLib implements CacheLibInterface {
     @Override
     public void clear() { //O(1)
         synchronized (this) {
-            removeListQueue.clear();
+            removeListQueue.truncate();
             storageMap.clear();
             }
     }

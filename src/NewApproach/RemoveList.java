@@ -5,7 +5,7 @@ public class RemoveList {
     private RemoveListNode lastNode;
     private int size;
 
-    public void addNodeBegin(RemoveListNode node) {
+    public void addToBegin(RemoveListNode node) {
         if (this.initListWithFirstNode(node)) {
             return;
         }
@@ -15,7 +15,7 @@ public class RemoveList {
         size++;
     }
 
-    public void addNodeEnd(RemoveListNode node) {
+    public void addToEnd(RemoveListNode node) {
         if (this.initListWithFirstNode(node)) {
             return;
         }
@@ -28,19 +28,19 @@ public class RemoveList {
 
     public RemoveListNode popBegin() {
         var nodeToRemove = firstNode;
-        this.deleteNode(firstNode);
+        this.delete(firstNode);
         size--;
         return nodeToRemove;
     }
 
     public RemoveListNode popEnd() {
         var nodeToRemove = lastNode;
-        this.deleteNode(lastNode);
+        this.delete(lastNode);
         size--;
         return nodeToRemove;
     }
 
-    public void deleteNode(RemoveListNode node) {
+    public void delete(RemoveListNode node) {
         if (node == null) return;
         if (node == firstNode) {
             firstNode = node.getNextNode();
@@ -59,7 +59,7 @@ public class RemoveList {
         size--;
     }
 
-    public void clear() {
+    public void truncate() {
         firstNode=null;
         lastNode=null;
         size=0;
@@ -79,6 +79,7 @@ public class RemoveList {
         return size;
     }
 
+    @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
         var currentNode = firstNode;
